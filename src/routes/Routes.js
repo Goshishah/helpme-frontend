@@ -1,0 +1,64 @@
+import React from "react";
+import { useSelector } from "react-redux";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+import routes from "./routesConfig";
+
+const Routes = () => {
+  //   const { isAuthenticated } = useSelector((state) => state.auth);
+  return (
+    <Router>
+      <Switch>
+        {/* {routes.map((route) => (
+          <Route
+            key={route.name}
+            exact={route.exact}
+            path={route.path}
+            children={route.component}
+          />
+        ))} */}
+
+        <Route
+          key={routes[0].name}
+          exact={routes[0].exact}
+          path={routes[0].path}
+          children={routes[0].component}
+        />
+        {routes.map((route) => (
+          <PrivateRoute key={route.name} exact={route.exact} path={route.path}>
+            {route.component}
+          </PrivateRoute>
+        ))}
+      </Switch>
+    </Router>
+  );
+};
+
+const PrivateRoute = (props) => {
+  const { children, ...rest } = props;
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  console.log("props........", props, isAuthenticated);
+  return (
+    <Route
+      {...rest}
+      render={(props) => {
+        return isAuthenticated ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/",
+              state: { from: props.location },
+            }}
+          />
+        );
+      }}
+    />
+  );
+};
+
+export default Routes;

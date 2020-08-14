@@ -1,0 +1,17 @@
+@import "../../stylesheets/sass/main.scss";
+
+.app-input {
+  display: block;
+  padding: 5px;
+  border: none;
+  border-bottom: 1px solid $ivory-color;
+  font-size: 16px;
+  &:focus {
+    outline: none;
+  }
+}
+
+.input-error {
+  font-size: 14px;
+  color: $red-color;
+}
