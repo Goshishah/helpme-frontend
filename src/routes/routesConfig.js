@@ -1,5 +1,6 @@
 import React from "react";
 import Login from "../pages/Login/Login";
+import Register from "../pages/Register/Register";
 import SuperAdminHome from "../pages/SuperAdminHome/SuperAdminHome";
 import AdminHome from "../pages/AdminHome/AdminHome";
 import Home from "../pages/Home/Home";
@@ -8,6 +9,7 @@ import { ROLES } from "../utils/constants";
 
 export const routesPath = {
   default: "/",
+  register: "/register",
   login: "/login",
   superadminHome: "/superadmin-dashboard",
   adminHome: "/admin-dashboard",
@@ -23,6 +25,14 @@ const routes = [
     isPublic: true,
     roles: [ROLES.ANONYMOUS],
     component: <Login />,
+  },
+  {
+    name: "register",
+    path: routesPath.register,
+    exact: false,
+    isPublic: true,
+    roles: [ROLES.ANONYMOUS],
+    component: <Register />,
   },
   {
     name: "login",

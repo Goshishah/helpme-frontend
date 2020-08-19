@@ -34,13 +34,19 @@ const Login = () => {
       const { email, password } = values;
       loginService({ email, password })
         .then((response) => {
-          dispatch(loginAction({ isAuthenticated: response.isAuthenticated }));
-          if (response.roles.some((item) => item.name === ROLES.SUPER_ADMIN)) {
-            history.push(routesPath.superadminHome);
-          } else if (response.roles.some((item) => item.name === ROLES.ADMIN)) {
-            history.push(routesPath.adminHome);
-          } else if (response.roles.some((item) => item.name === ROLES.USER)) {
-            history.push(routesPath.userHome);
+          console.log("response", response);
+          const { success, data, message } = response;
+          if (success) {
+            dispatch(loginAction({ isAuthenticated: data.isAuthenticated }));
+            if (data.roles.some((item) => item.name === ROLES.SUPER_ADMIN)) {
+              history.push(routesPath.superadminHome);
+            } else if (data.roles.some((item) => item.name === ROLES.ADMIN)) {
+              history.push(routesPath.adminHome);
+            } else if (data.roles.some((item) => item.name === ROLES.USER)) {
+              history.push(routesPath.userHome);
+            }
+          } else {
+            formik.setFieldError("email", message);
           }
         })
         .catch((error) => {
@@ -48,6 +54,10 @@ const Login = () => {
         });
     },
   });
+
+  const handleRegister = () => {
+    history.push(routesPath.register);
+  };
 
   const { values, errors, touched, handleChange, handleSubmit } = formik;
   return (
@@ -74,6 +84,7 @@ const Login = () => {
         </div>
         <div className="form-field">
           <AppButton onClick={handleSubmit}>Login</AppButton>
+          <AppButton onClick={handleRegister}>Register</AppButton>
         </div>
       </form>
     </div>
