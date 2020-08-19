@@ -28,6 +28,12 @@ const Routes = () => {
           path={routes[0].path}
           children={routes[0].component}
         />
+        <Route
+          key={routes[1].name}
+          exact={routes[1].exact}
+          path={routes[1].path}
+          children={routes[1].component}
+        />
         {routes.map((route) => (
           <PrivateRoute key={route.name} exact={route.exact} path={route.path}>
             {route.component}
