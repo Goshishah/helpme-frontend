@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import AppInput from "../../components/AppInput/AppInput";
 import AppButton from "../../components/AppButton/AppButton";
-import { loginAction } from "../../redux/authReducer";
+import { loginAction } from "../../redux/userReducer";
 import { loginService } from "../../services/authService";
 
 import "./login.scss";
@@ -19,7 +19,7 @@ const Login = () => {
   const formik = useFormik({
     initialValues: {
       email: "superadmin@helpme.pk",
-      password: "123456",
+      password: "123",
     },
     validationSchema: Yup.object().shape({
       email: Yup.string()
@@ -34,10 +34,9 @@ const Login = () => {
       const { email, password } = values;
       loginService({ email, password })
         .then((response) => {
-          console.log("response", response);
           const { success, data, message } = response;
           if (success) {
-            dispatch(loginAction({ isAuthenticated: data.isAuthenticated }));
+            dispatch(loginAction(data));
             if (data.roles.some((item) => item.name === ROLES.SUPER_ADMIN)) {
               history.push(routesPath.superadminHome);
             } else if (data.roles.some((item) => item.name === ROLES.ADMIN)) {

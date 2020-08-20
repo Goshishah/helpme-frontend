@@ -9,7 +9,7 @@ import {
 import routes from "./routesConfig";
 
 const Routes = () => {
-  //   const { isAuthenticated } = useSelector((state) => state.auth);
+  //   const { isAuthenticated } = useSelector((state) => state.user);
   return (
     <Router>
       <Switch>
@@ -46,7 +46,7 @@ const Routes = () => {
 
 const PrivateRoute = (props) => {
   const { children, ...rest } = props;
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated } = useSelector((state) => state.user);
   console.log("props........", props, isAuthenticated);
   return (
     <Route

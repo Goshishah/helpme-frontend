@@ -3,4 +3,11 @@
 .app-header {
   display: flex;
   flex-direction: row-reverse;
+  .greeting-title {
+    display: flex;
+    align-items: center;
+  }
+  .greeting-name {
+    padding: 0 10px;
+  }
 }
