@@ -19,6 +19,7 @@ const Register = () => {
       username: "",
       email: "",
       password: "",
+      roleName: "",
     },
     validationSchema: Yup.object().shape({
       firstname: Yup.string()
@@ -35,10 +36,27 @@ const Register = () => {
       password: Yup.string()
         .max(200, "Password is too long")
         .required("Required"),
+      roleName: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      const { firstname, lastname, username, email, password } = values;
-      registerService({ firstname, lastname, username, email, password })
+      console.log("values......", values);
+      return;
+      const {
+        firstname,
+        lastname,
+        username,
+        email,
+        password,
+        roleName,
+      } = values;
+      registerService({
+        firstname,
+        lastname,
+        username,
+        email,
+        password,
+        roleName,
+      })
         .then((response) => {
           handleLogin();
         })
@@ -52,7 +70,14 @@ const Register = () => {
     history.push(routesPath.login);
   };
 
-  const { values, errors, touched, handleChange, handleSubmit } = formik;
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = formik;
   return (
     <div className="register-page">
       <form className="app-form" onSubmit={(e) => e.preventDefault()}>
@@ -101,6 +126,21 @@ const Register = () => {
             error={touched.password && errors.password}
             onChange={handleChange}
           />
+        </div>
+        <div className="form-field">
+          <select
+            name="roleName"
+            value={values.roleName}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          >
+            <option value="">Select type</option>
+            <option value="BENEFICIARY">Beneficiary/Taker</option>
+            <option value="BENEFACTOR">Benefactor/Doner</option>
+          </select>
+          <span className="input-error">
+            {touched.password && errors.password}
+          </span>
         </div>
         <div className="form-field">
           <AppButton onClick={handleLogin}>Login</AppButton>

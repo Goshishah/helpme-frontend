@@ -4,6 +4,7 @@ export const registerService = ({
   username,
   email,
   password,
+  roleName,
 }) => {
   return fetch("/register", {
     method: "POST",
@@ -11,7 +12,14 @@ export const registerService = ({
       "Content-Type": "application/json",
       mode: "no-cors",
     },
-    body: JSON.stringify({ firstname, lastname, username, email, password }),
+    body: JSON.stringify({
+      firstname,
+      lastname,
+      username,
+      email,
+      password,
+      roleName,
+    }),
   }).then((response) => response.json());
 };
 

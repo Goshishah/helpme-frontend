@@ -5,6 +5,7 @@ import SuperAdminHome from "../pages/SuperAdminHome/SuperAdminHome";
 import AdminHome from "../pages/AdminHome/AdminHome";
 import Home from "../pages/Home/Home";
 import NoMatch from "../pages/NoMatch/NoMatch";
+import Benefactors from "../pages/Benefactors/Benefactors";
 import { ROLES } from "../utils/constants";
 
 export const routesPath = {
@@ -14,6 +15,7 @@ export const routesPath = {
   superadminHome: "/superadmin-dashboard",
   adminHome: "/admin-dashboard",
   userHome: "/dashboard",
+  benefactors: "/benefactors",
   nomatch: "/*",
 };
 
@@ -59,12 +61,20 @@ const routes = [
     component: <AdminHome />,
   },
   {
-    name: "admin",
+    name: "home",
     path: routesPath.userHome,
     exact: false,
     isPublic: false,
     roles: [ROLES.USER],
     component: <Home />,
+  },
+  {
+    name: "benefactors",
+    path: routesPath.benefactors,
+    exact: false,
+    isPublic: false,
+    roles: [ROLES.ADMIN, ROLES.SUPER_ADMIN],
+    component: <Benefactors />,
   },
   {
     name: "nomatch",
