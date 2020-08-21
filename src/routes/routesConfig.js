@@ -26,7 +26,7 @@ const routes = [
     exact: true,
     isPublic: true,
     roles: [ROLES.ANONYMOUS],
-    component: <Login />,
+    // component: <LandingPage />,
   },
   {
     name: "register",
