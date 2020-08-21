@@ -1,9 +1,9 @@
 import React from "react";
 import AppButton from "../AppButton/AppButton";
-import { loginAction } from "../../redux/userReducer";
+import { logoutAction } from "../../redux/userReducer";
 import { useDispatch, useSelector } from "react-redux";
 import "./app-header.scss";
-import { logoutService } from "../../services/authService";
+import { logoutService, removeAuthToken } from "../../services/authService";
 
 const AppHeader = () => {
   const dispatch = useDispatch();
@@ -12,7 +12,11 @@ const AppHeader = () => {
   const handleLogout = () => {
     logoutService({ email: "" })
       .then((response) => {
-        dispatch(loginAction({ isAuthenticated: response.isAuthenticated }));
+        const { success } = response;
+        if (success) {
+          dispatch(logoutAction());
+          removeAuthToken();
+        }
       })
       .catch((error) => {
         console.log("error.......", error);

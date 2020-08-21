@@ -39,8 +39,6 @@ const Register = () => {
       roleName: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      console.log("values......", values);
-      return;
       const {
         firstname,
         lastname,

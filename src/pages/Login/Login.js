@@ -1,20 +1,22 @@
 import React from "react";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
+
 import AppInput from "../../components/AppInput/AppInput";
 import AppButton from "../../components/AppButton/AppButton";
+import { loginService, setAuthToken } from "../../services/authService";
 import { loginAction } from "../../redux/userReducer";
-import { loginService } from "../../services/authService";
-
-import "./login.scss";
-import { useHistory } from "react-router-dom";
 import { routesPath } from "../../routes/routesConfig";
 import { ROLES } from "../../utils/constants";
+import "./login.scss";
 
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { isAuthenticated } = useSelector((state) => state.user);
+  history.push(isAuthenticated ? routesPath.adminHome : routesPath.login);
 
   const formik = useFormik({
     initialValues: {
@@ -34,9 +36,13 @@ const Login = () => {
       const { email, password } = values;
       loginService({ email, password })
         .then((response) => {
+          console.log(response);
           const { success, data, message } = response;
           if (success) {
-            dispatch(loginAction(data));
+            setAuthToken(data.accessToken);
+            dispatch(
+              loginAction({ ...data, isAuthenticated: !!data.accessToken })
+            );
             if (data.roles.some((item) => item.name === ROLES.SUPER_ADMIN)) {
               history.push(routesPath.superadminHome);
             } else if (data.roles.some((item) => item.name === ROLES.ADMIN)) {

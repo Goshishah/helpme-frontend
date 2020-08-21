@@ -1,3 +1,4 @@
+import Storage from "./storageService";
 export const registerService = ({
   firstname,
   lastname,
@@ -44,3 +45,18 @@ export const logoutService = ({ email, password }) => {
     body: JSON.stringify({ email }),
   }).then((response) => response.json());
 };
+
+export const verifyService = () => {
+  return fetch("/verify", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getAuthToken()}`,
+      mode: "no-cors",
+    },
+  }).then((response) => response.json());
+};
+
+export const getAuthToken = () => Storage.getItem("token");
+export const setAuthToken = (token) => Storage.setItem("token", token);
+export const removeAuthToken = () => Storage.removeItem("token");

@@ -9,7 +9,6 @@ import {
 import routes from "./routesConfig";
 
 const Routes = () => {
-  //   const { isAuthenticated } = useSelector((state) => state.user);
   return (
     <Router>
       <Switch>
@@ -22,17 +21,23 @@ const Routes = () => {
           />
         ))} */}
 
-        <Route
+        {/* <Route
           key={routes[0].name}
           exact={routes[0].exact}
           path={routes[0].path}
           children={routes[0].component}
-        />
+        /> */}
         <Route
           key={routes[1].name}
           exact={routes[1].exact}
           path={routes[1].path}
           children={routes[1].component}
+        />
+        <Route
+          key={routes[2].name}
+          exact={routes[2].exact}
+          path={routes[2].path}
+          children={routes[2].component}
         />
         {routes.map((route) => (
           <PrivateRoute key={route.name} exact={route.exact} path={route.path}>
@@ -47,7 +52,6 @@ const Routes = () => {
 const PrivateRoute = (props) => {
   const { children, ...rest } = props;
   const { isAuthenticated } = useSelector((state) => state.user);
-  console.log("props........", props, isAuthenticated);
   return (
     <Route
       {...rest}
@@ -57,8 +61,8 @@ const PrivateRoute = (props) => {
         ) : (
           <Redirect
             to={{
-              pathname: "/",
-              state: { from: props.location },
+              pathname: "/login",
+              state: { referer: props.location.pathname },
             }}
           />
         );
