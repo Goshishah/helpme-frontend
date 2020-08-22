@@ -2,12 +2,16 @@
 
 .app-header {
   display: flex;
-  flex-direction: row-reverse;
+  justify-content: space-between;
   .greeting-title {
     display: flex;
     align-items: center;
   }
   .greeting-name {
     padding: 0 10px;
+  }
+  .app-logo {
+    cursor: pointer;
+    width: 100px;
   }
 }

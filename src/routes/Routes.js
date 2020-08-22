@@ -62,7 +62,7 @@ const PrivateRoute = (props) => {
         ) : (
           <Redirect
             to={{
-              pathname: "/login",
+              pathname: "/",
               state: { referer: props.location.pathname },
             }}
           />

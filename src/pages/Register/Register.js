@@ -8,6 +8,7 @@ import { registerService } from "../../services/authService";
 import { useHistory } from "react-router-dom";
 import { routesPath } from "../../routes/routesConfig";
 import "./register.scss";
+import AppHeader from "../../components/AppHeader/AppHeader";
 
 const Register = () => {
   const history = useHistory();
@@ -78,6 +79,7 @@ const Register = () => {
   } = formik;
   return (
     <div className="register-page">
+      <AppHeader />
       <form className="app-form" onSubmit={(e) => e.preventDefault()}>
         <div className="form-field">
           <AppInput

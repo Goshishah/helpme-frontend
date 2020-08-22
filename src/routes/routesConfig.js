@@ -4,8 +4,9 @@ import Register from "../pages/Register/Register";
 import NoMatch from "../pages/NoMatch/NoMatch";
 import Benefactors from "../pages/Benefactors/Benefactors";
 import Groups from "../pages/Groups/Groups";
-import { ROLES } from "../utils/constants";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import Landing from "../pages/Landing/Landing";
+import { ROLES } from "../utils/constants";
 
 export const routesPath = {
   default: "/",
@@ -25,7 +26,7 @@ const routes = [
     exact: true,
     isPublic: true,
     roles: [ANONYMOUS],
-    component: <Login />,
+    component: <Landing />,
   },
   {
     name: "register",

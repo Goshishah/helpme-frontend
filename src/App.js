@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "./app.scss";
+import { useDispatch } from "react-redux";
 import Routes from "./routes/Routes";
-import AppLoader from "./pages/AppLoader/AppLoader";
+import AppLoader from "./components/AppLoader/AppLoader";
 import { verifyService } from "./services/authService";
 import { loginAction } from "./redux/userReducer";
-import { useDispatch } from "react-redux";
+import "./app.scss";
 // benefactor and beneficiary
 
 const App = () => {
