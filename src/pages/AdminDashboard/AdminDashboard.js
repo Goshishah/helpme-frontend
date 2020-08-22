@@ -1,8 +1,8 @@
 import React from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
-import "./admin-home.scss";
+import "./admin-dashboard.scss";
 
-const AdminHome = () => {
+const AdminDashboard = () => {
   return (
     <div className="admin-home-page">
       <AppHeader />
@@ -11,4 +11,4 @@ const AdminHome = () => {
   );
 };
 
-export default AdminHome;
+export default AdminDashboard;

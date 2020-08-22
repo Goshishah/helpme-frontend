@@ -9,14 +9,15 @@ import AppButton from "../../components/AppButton/AppButton";
 import { loginService, setAuthToken } from "../../services/authService";
 import { loginAction } from "../../redux/userReducer";
 import { routesPath } from "../../routes/routesConfig";
-import { ROLES } from "../../utils/constants";
 import "./login.scss";
 
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isAuthenticated } = useSelector((state) => state.user);
-  history.push(isAuthenticated ? routesPath.adminHome : routesPath.login);
+  const { isAuthenticated, roles } = useSelector((state) => state.user);
+  history.push(
+    isAuthenticated ? history.push(routesPath.dashbord) : routesPath.login
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -43,13 +44,7 @@ const Login = () => {
             dispatch(
               loginAction({ ...data, isAuthenticated: !!data.accessToken })
             );
-            if (data.roles.some((item) => item.name === ROLES.SUPER_ADMIN)) {
-              history.push(routesPath.superadminHome);
-            } else if (data.roles.some((item) => item.name === ROLES.ADMIN)) {
-              history.push(routesPath.adminHome);
-            } else if (data.roles.some((item) => item.name === ROLES.USER)) {
-              history.push(routesPath.userHome);
-            }
+            history.push(routesPath.dashbord);
           } else {
             formik.setFieldError("email", message);
           }

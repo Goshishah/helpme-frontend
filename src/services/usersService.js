@@ -1,7 +1,7 @@
 import { getAuthToken } from "./authService";
 
-export const usersService = () => {
-  return fetch("/users", {
+export const usersService = ({ type }) => {
+  return fetch(`/users?type=${type}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

@@ -21,12 +21,12 @@ const Routes = () => {
           />
         ))} */}
 
-        {/* <Route
+        <Route
           key={routes[0].name}
           exact={routes[0].exact}
           path={routes[0].path}
           children={routes[0].component}
-        /> */}
+        />
         <Route
           key={routes[1].name}
           exact={routes[1].exact}
@@ -52,6 +52,7 @@ const Routes = () => {
 const PrivateRoute = (props) => {
   const { children, ...rest } = props;
   const { isAuthenticated } = useSelector((state) => state.user);
+
   return (
     <Route
       {...rest}

@@ -1,0 +1,26 @@
+@import "../../stylesheets/sass/main.scss";
+
+.superadmin-home-page {
+  display: flex;
+  flex: 1;
+  align-self: normal;
+  flex-direction: column;
+
+  .page-body {
+    display: flex;
+  }
+
+  .card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    margin: 10px;
+    border: 1px solid #ded8d8;
+    cursor: pointer;
+    &:hover {
+      background-color: #ded8d8;
+    }
+  }
+}
