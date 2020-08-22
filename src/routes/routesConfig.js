@@ -1,39 +1,38 @@
 import React from "react";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
-import SuperAdminHome from "../pages/SuperAdminHome/SuperAdminHome";
-import AdminHome from "../pages/AdminHome/AdminHome";
-import Home from "../pages/Home/Home";
 import NoMatch from "../pages/NoMatch/NoMatch";
 import Benefactors from "../pages/Benefactors/Benefactors";
+import Groups from "../pages/Groups/Groups";
 import { ROLES } from "../utils/constants";
+import Dashboard from "../pages/Dashboard/Dashboard";
 
 export const routesPath = {
   default: "/",
   register: "/register",
   login: "/login",
-  superadminHome: "/superadmin-dashboard",
-  adminHome: "/admin-dashboard",
-  userHome: "/dashboard",
+  dashbord: "/dashboard",
+  groups: "/groups",
   benefactors: "/benefactors",
   nomatch: "/*",
 };
 
+const { SUPER_ADMIN, ADMIN, BENEFACTOR, BENEFICIARY, ANONYMOUS } = ROLES;
 const routes = [
   {
     name: "default",
     path: routesPath.default,
     exact: true,
     isPublic: true,
-    roles: [ROLES.ANONYMOUS],
-    // component: <LandingPage />,
+    roles: [ANONYMOUS],
+    component: <Login />,
   },
   {
     name: "register",
     path: routesPath.register,
     exact: false,
     isPublic: true,
-    roles: [ROLES.ANONYMOUS],
+    roles: [ANONYMOUS],
     component: <Register />,
   },
   {
@@ -41,47 +40,40 @@ const routes = [
     path: routesPath.login,
     exact: false,
     isPublic: true,
-    roles: [ROLES.ANONYMOUS],
+    roles: [ANONYMOUS],
     component: <Login />,
   },
   {
-    name: "superadmin",
-    path: routesPath.superadminHome,
+    name: "dashboard",
+    path: routesPath.dashbord,
     exact: false,
     isPublic: false,
-    roles: [ROLES.SUPER_ADMIN],
-    component: <SuperAdminHome />,
-  },
-  {
-    name: "admin",
-    path: routesPath.adminHome,
-    exact: false,
-    isPublic: false,
-    roles: [ROLES.ADMIN],
-    component: <AdminHome />,
-  },
-  {
-    name: "home",
-    path: routesPath.userHome,
-    exact: false,
-    isPublic: false,
-    roles: [ROLES.USER],
-    component: <Home />,
+    roles: [SUPER_ADMIN, ADMIN, BENEFACTOR, BENEFICIARY],
+    component: <Dashboard />,
   },
   {
     name: "benefactors",
     path: routesPath.benefactors,
     exact: false,
     isPublic: false,
-    roles: [ROLES.ADMIN, ROLES.SUPER_ADMIN],
+    roles: [ADMIN, SUPER_ADMIN],
     component: <Benefactors />,
+  },
+  ,
+  {
+    name: "groups",
+    path: routesPath.groups,
+    exact: false,
+    isPublic: false,
+    roles: [ADMIN, SUPER_ADMIN],
+    component: <Groups />,
   },
   {
     name: "nomatch",
     path: routesPath.nomatch,
     exact: false,
     isPublic: true,
-    roles: [ROLES.ANONYMOUS],
+    roles: [ANONYMOUS],
     component: <NoMatch />,
   },
 ];

@@ -5,19 +5,6 @@ import App from "./App";
 import store from "./redux/store";
 import "./index.scss";
 import * as serviceWorker from "./serviceWorker";
-import { loginAction } from "./redux/userReducer";
-import { getAuthToken, verifyService } from "./services/authService";
-
-verifyService()
-  .then((response) => {
-    const { success, data } = response;
-    if (success) {
-      store.dispatch(loginAction({ ...data, isAuthenticated: true }));
-    }
-  })
-  .catch((error) => console.log(error));
-
-// store.dispatch(loginAction({ isAuthenticated: false }));
 
 ReactDOM.render(
   <React.StrictMode>

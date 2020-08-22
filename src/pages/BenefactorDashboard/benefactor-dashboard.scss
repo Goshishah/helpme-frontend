@@ -1,0 +1,55 @@
+@import "../../stylesheets/sass/main.scss";
+
+.benefactor-dashboard-page {
+  display: flex;
+  flex: 1;
+  align-self: normal;
+  flex-direction: column;
+
+  .page-body {
+    display: flex;
+  }
+
+  .card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    margin: 10px;
+    border: 1px solid #ded8d8;
+    cursor: pointer;
+    &:hover {
+      background-color: #ded8d8;
+    }
+  }
+
+  .list-cnt {
+    list-style-type: none;
+    padding: 20px;
+
+    cursor: pointer;
+    .list-item {
+      padding: 10px;
+      &:hover {
+        background-color: #ded8d8;
+      }
+    }
+  }
+
+  .beneficiary {
+    width: 250px;
+    img {
+      width: 250px;
+    }
+    .read-more {
+      color: black;
+      font-weight: 500;
+    }
+
+    .donation-detail {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

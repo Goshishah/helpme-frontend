@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import "./benefactors.scss";
 import { usersService } from "../../services/usersService";
+import { useHistory } from "react-router-dom";
+import { routesPath } from "../../routes/routesConfig";
 
 const Benefactors = () => {
   const [users, setUsers] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
-    usersService()
+    usersService({ type: "BENEFACTOR" })
       .then((response) => {
         const { success, data } = response;
         if (success) {
@@ -34,12 +37,21 @@ const Benefactors = () => {
   return (
     <div className="benefactors-page">
       <AppHeader />
-      <h1>Benefactors</h1>
+      <h1>
+        <span
+          className="back-arrow"
+          onClick={() => history.push(routesPath.superadminHome)}
+        >
+          {"<"}
+        </span>
+        Benefactors
+      </h1>
       <table>
         <thead>
           <tr align="left">
             <th>ID</th>
             <th>Name</th>
+            <th>Username</th>
             <th>Email</th>
             <th>Last Active</th>
             <th>Actions</th>
@@ -47,11 +59,12 @@ const Benefactors = () => {
         </thead>
         <tbody>
           {users.map((user, index) => {
-            const { firstname, lastname, email, last_login } = user;
+            const { firstname, username, lastname, email, last_login } = user;
             return (
               <tr key={email}>
                 <td>{index + 1}</td>
                 <td>{`${firstname} ${lastname}`}</td>
+                <td>{username}</td>
                 <td>{email}</td>
                 <td>{formatDate(last_login)}</td>
                 <td>

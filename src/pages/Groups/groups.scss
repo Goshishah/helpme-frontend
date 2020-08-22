@@ -1,8 +1,14 @@
 @import "../../stylesheets/sass/main.scss";
 
-.admin-home-page {
+.groups-page {
   display: flex;
   flex: 1;
   align-self: normal;
   flex-direction: column;
+}
+
+thead {
+  thead {
+    font-weight: 600;
+  }
 }
