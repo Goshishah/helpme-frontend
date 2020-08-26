@@ -8,6 +8,8 @@ import { registerService } from "../../services/authService";
 import { useHistory } from "react-router-dom";
 import { routesPath } from "../../routes/routesConfig";
 import "./register.scss";
+import AppHeader from "../../components/AppHeader/AppHeader";
+import { ROLES } from "../../utils/constants";
 
 const Register = () => {
   const history = useHistory();
@@ -78,6 +80,7 @@ const Register = () => {
   } = formik;
   return (
     <div className="register-page">
+      <AppHeader />
       <form className="app-form" onSubmit={(e) => e.preventDefault()}>
         <div className="form-field">
           <AppInput
@@ -133,8 +136,8 @@ const Register = () => {
             onBlur={handleBlur}
           >
             <option value="">Select type</option>
-            <option value="BENEFICIARY">Beneficiary/Taker</option>
-            <option value="BENEFACTOR">Benefactor/Doner</option>
+            <option value={ROLES.BENEFICIARY}>Beneficiary/Taker</option>
+            <option value={ROLES.BENEFACTOR}>Benefactor/Doner</option>
           </select>
           <span className="input-error">
             {touched.password && errors.password}

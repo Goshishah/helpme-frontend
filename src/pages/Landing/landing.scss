@@ -1,8 +1,14 @@
 @import "../../stylesheets/sass/main.scss";
 
-.login-page {
+.landing-page {
   display: flex;
   flex: 1;
   align-self: normal;
   flex-direction: column;
+
+  .banner {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px;
+  }
 }

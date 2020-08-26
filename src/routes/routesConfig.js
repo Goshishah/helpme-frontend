@@ -3,9 +3,12 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import NoMatch from "../pages/NoMatch/NoMatch";
 import Benefactors from "../pages/Benefactors/Benefactors";
+import Beneficiaries from "../pages/Beneficiaries/Beneficiaries";
+import BeneficiaryDetail from "../pages/BeneficiaryDetail/BeneficiaryDetail";
 import Groups from "../pages/Groups/Groups";
-import { ROLES } from "../utils/constants";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import Landing from "../pages/Landing/Landing";
+import { ROLES } from "../utils/constants";
 
 export const routesPath = {
   default: "/",
@@ -14,6 +17,8 @@ export const routesPath = {
   dashbord: "/dashboard",
   groups: "/groups",
   benefactors: "/benefactors",
+  beneficiaries: "/beneficiaries",
+  beneficiaryDetail: "/beneficiary-detail/:id",
   nomatch: "/*",
 };
 
@@ -25,7 +30,7 @@ const routes = [
     exact: true,
     isPublic: true,
     roles: [ANONYMOUS],
-    component: <Login />,
+    component: <Landing />,
   },
   {
     name: "register",
@@ -59,7 +64,22 @@ const routes = [
     roles: [ADMIN, SUPER_ADMIN],
     component: <Benefactors />,
   },
-  ,
+  {
+    name: "beneficiaries",
+    path: routesPath.beneficiaries,
+    exact: false,
+    isPublic: false,
+    roles: [ADMIN, SUPER_ADMIN],
+    component: <Beneficiaries />,
+  },
+  {
+    name: "beneficiaryDetail",
+    path: routesPath.beneficiaryDetail,
+    exact: false,
+    isPublic: false,
+    roles: [ADMIN, SUPER_ADMIN],
+    component: <BeneficiaryDetail />,
+  },
   {
     name: "groups",
     path: routesPath.groups,

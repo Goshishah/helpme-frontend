@@ -10,6 +10,7 @@ import { loginService, setAuthToken } from "../../services/authService";
 import { loginAction } from "../../redux/userReducer";
 import { routesPath } from "../../routes/routesConfig";
 import "./login.scss";
+import AppHeader from "../../components/AppHeader/AppHeader";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ const Login = () => {
   const { values, errors, touched, handleChange, handleSubmit } = formik;
   return (
     <div className="login-page">
+      <AppHeader />
       <form className="app-form" onSubmit={(e) => e.preventDefault()}>
         <div className="form-field">
           <AppInput

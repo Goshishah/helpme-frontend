@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
-import "./benefactors.scss";
 import { usersService } from "../../services/usersService";
 import { useHistory } from "react-router-dom";
 import { routesPath } from "../../routes/routesConfig";
+import { ROLES } from "../../utils/constants";
+import "./beneficiaries.scss";
 
-const Benefactors = () => {
+const Beneficiaries = () => {
   const [users, setUsers] = useState([]);
   const history = useHistory();
 
   useEffect(() => {
-    usersService({ type: "BENEFACTOR" })
+    usersService({ type: ROLES.BENEFICIARY })
       .then((response) => {
         const { success, data } = response;
         if (success) {
@@ -33,9 +34,12 @@ const Benefactors = () => {
 
     return [year, month, day].join("-");
   }
+  const handleBeneficiary = (user) => {
+    history.push(`/beneficiary-detail/${user.id}`);
+  };
 
   return (
-    <div className="benefactors-page">
+    <div className="beneficiaries-page">
       <AppHeader />
       <h1>
         <span
@@ -44,7 +48,7 @@ const Benefactors = () => {
         >
           {"<"}
         </span>
-        Benefactors
+        Beneficiaries
       </h1>
       <table>
         <thead>
@@ -61,7 +65,7 @@ const Benefactors = () => {
           {users.map((user, index) => {
             const { firstname, username, lastname, email, last_login } = user;
             return (
-              <tr key={email}>
+              <tr key={email} onClick={() => handleBeneficiary(user)}>
                 <td>{index + 1}</td>
                 <td>{`${firstname} ${lastname}`}</td>
                 <td>{username}</td>
@@ -80,4 +84,4 @@ const Benefactors = () => {
   );
 };
 
-export default Benefactors;
+export default Beneficiaries;
