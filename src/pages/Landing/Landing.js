@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import Beneficiary from "../../components/Beneficiary/Beneficiary";
+import { getBeneficiariesDetailAPI } from "../../services/beneficiaryAPI";
 import "./landing.scss";
 
 const Landing = () => {
@@ -27,12 +28,25 @@ const BannerCampaign = () => {
 };
 
 const RecentCampaigns = () => {
+  const [beneficiaries, setBeneficiaries] = useState([]);
+  useEffect(() => {
+    getBeneficiariesDetailAPI()
+      .then((response) => {
+        const { success, data } = response;
+        if (success) {
+          setBeneficiaries(data);
+        }
+      })
+      .catch((error) => {
+        console.log("getBeneficiariesDetailService", error);
+      });
+  }, []);
+
   return (
     <div className="recent-compaigns">
-      <Beneficiary />
-      <Beneficiary />
-      <Beneficiary />
-      <Beneficiary />
+      {beneficiaries.map((beneficiary) => (
+        <Beneficiary key={beneficiary.id} beneficiary={beneficiary} />
+      ))}
     </div>
   );
 };

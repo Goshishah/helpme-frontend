@@ -46,7 +46,7 @@ const Groups = () => {
       <h1>
         <span
           className="back-arrow"
-          onClick={() => history.push(routesPath.superadminHome)}
+          onClick={() => history.push(routesPath.dashbord)}
         >
           {"<"}
         </span>

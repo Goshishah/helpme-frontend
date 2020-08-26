@@ -1,7 +1,9 @@
 import React from "react";
 import "./beneficiary.scss";
 
-const Beneficiary = () => {
+const Beneficiary = ({ beneficiary }) => {
+  console.log("beneficiary......", beneficiary);
+  const { title, summary, raised_ammount, required_ammount } = beneficiary;
   return (
     <div className="beneficiary">
       <img
@@ -9,11 +11,10 @@ const Beneficiary = () => {
         alt="dumy-text"
       />
       <div>
-        <strong>Donate to Umar Habib for Her Cochlear Implant</strong>
+        <strong>{title}</strong>
       </div>
       <div className="detail">
-        To help Umar have her surgery and enable her to hear once again, please
-        send in your contribution to her surgery e...
+        {summary}...
         <a className="read-more" href="#">
           [Read More]
         </a>
@@ -21,11 +22,11 @@ const Beneficiary = () => {
       <div> progress bar</div>
       <div className="donation-detail">
         <div className="required-donation">
-          <strong>Rs. 1000</strong>
+          <strong>Rs. {required_ammount}</strong>
           <div>Required</div>
         </div>
         <div className="required-donation">
-          <strong>Rs. 5000</strong>
+          <strong>Rs. {raised_ammount}</strong>
           <div>Raised</div>
         </div>
       </div>

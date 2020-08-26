@@ -1,3 +1,17 @@
 .back-arrow {
   cursor: pointer;
 }
+
+thead {
+  thead {
+    font-weight: 600;
+  }
+}
+tbody {
+  tr {
+    &:hover {
+      background-color: #ded8d8;
+      cursor: pointer;
+    }
+  }
+}
