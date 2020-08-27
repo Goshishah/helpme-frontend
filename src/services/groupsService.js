@@ -23,7 +23,7 @@ export const addGroupservice = (group) => {
   }).then((response) => response.json());
 };
 
-export const updateGroupsService = (group) => {
+export const updateGroupService = (group) => {
   return fetch(`/groups`, {
     method: "PUT",
     headers: {
@@ -35,7 +35,7 @@ export const updateGroupsService = (group) => {
   }).then((response) => response.json());
 };
 
-export const deleteGroupsService = (group) => {
+export const deleteGroupService = (id) => {
   return fetch(`/groups`, {
     method: "DELETE",
     headers: {
@@ -43,6 +43,6 @@ export const deleteGroupsService = (group) => {
       Authorization: `Bearer ${getAuthToken()}`,
       mode: "no-cors",
     },
-    body: JSON.stringify(group),
+    body: JSON.stringify({ id }),
   }).then((response) => response.json());
 };

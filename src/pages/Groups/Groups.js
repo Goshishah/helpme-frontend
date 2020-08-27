@@ -5,7 +5,10 @@ import { useHistory } from "react-router-dom";
 import { routesPath } from "../../routes/routesConfig";
 import "./groups.scss";
 import AddGroup from "./AddGroup";
-import { getGroupsService } from "../../services/groupsService";
+import {
+  getGroupsService,
+  deleteGroupService,
+} from "../../services/groupsService";
 
 function formatDate(date) {
   var d = new Date(date),
@@ -36,6 +39,33 @@ const Groups = () => {
         console.log("groupsService", error);
       });
   };
+
+  const handleGroupUpdate = () => {
+    getGroupsService()
+      .then((response) => {
+        const { success, data } = response;
+        if (success) {
+          setGroups(data);
+        }
+      })
+      .catch((error) => {
+        console.log("groupsService", error);
+      });
+  };
+
+  const handleGroupDelete = (id) => {
+    deleteGroupService(id)
+      .then((response) => {
+        const { success, data } = response;
+        if (success) {
+          setGroups(groups.filter((group) => group.id !== data.id));
+        }
+      })
+      .catch((error) => {
+        console.log("deleteGroupService", error);
+      });
+  };
+
   useEffect(() => {
     loadGroups();
   }, []);
@@ -56,13 +86,17 @@ const Groups = () => {
       {open ? (
         <AddGroup onClose={() => setOpen(false)} loadGroups={loadGroups} />
       ) : (
-        <GroupsTable groups={groups} />
+        <GroupsTable
+          groups={groups}
+          onUpdate={handleGroupUpdate}
+          onDelete={handleGroupDelete}
+        />
       )}
     </div>
   );
 };
 
-const GroupsTable = ({ groups }) => {
+const GroupsTable = ({ groups, onUpdate, onDelete }) => {
   return groups.length < 1 ? (
     <h3>No record</h3>
   ) : (
@@ -78,18 +112,32 @@ const GroupsTable = ({ groups }) => {
         </tr>
       </thead>
       <tbody>
-        {groups.map((user, index) => {
-          const { name, email, address, created_on } = user;
+        {groups.map((group, index) => {
+          const { id, name, email, address, created_on } = group;
           return (
-            <tr key={email}>
+            <tr key={id}>
               <td>{index + 1}</td>
               <td>{name}</td>
               <td>{email}</td>
               <td>{address}</td>
               <td>{formatDate(created_on)}</td>
               <td>
-                <button>Edit</button>
-                <button>Delete</button>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onUpdate(group);
+                  }}
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onDelete(id);
+                  }}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           );
