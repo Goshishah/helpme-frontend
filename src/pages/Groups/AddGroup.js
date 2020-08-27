@@ -4,15 +4,63 @@ import { useFormik } from "formik";
 
 import AppInput from "../../components/AppInput/AppInput";
 import AppButton from "../../components/AppButton/AppButton";
-import { addGroupservice } from "../../services/groupsService";
+import {
+  addGroupservice,
+  updateGroupService,
+} from "../../services/groupsService";
 
 const AddGroup = (props) => {
-  const formik = useFormik({
-    initialValues: {
+  const { onClose, loadGroups, selectedGroup } = props;
+
+  const getInitialValues = () => {
+    if (selectedGroup) {
+      return selectedGroup;
+    }
+    return {
       name: "",
       address: "",
       email: "",
-    },
+    };
+  };
+
+  const handleAddGroup = (group) => {
+    addGroupservice(group)
+      .then((response) => {
+        console.log(response);
+        const { success, data, message } = response;
+        if (success) {
+          loadGroups();
+        } else {
+          // formik.setFieldError("email", message);
+        }
+        onClose();
+      })
+      .catch((error) => {
+        console.log("error.......", error);
+        onClose();
+      });
+  };
+
+  const handleUpdateGroup = (group) => {
+    updateGroupService(group)
+      .then((response) => {
+        console.log(response);
+        const { success, data, message } = response;
+        if (success) {
+          loadGroups();
+        } else {
+          // formik.setFieldError("email", message);
+        }
+        onClose();
+      })
+      .catch((error) => {
+        console.log("error.......", error);
+        onClose();
+      });
+  };
+
+  const formik = useFormik({
+    initialValues: getInitialValues(),
     validationSchema: Yup.object().shape({
       name: Yup.string().max(150, "Name is too long").required("Required"),
       address: Yup.string()
@@ -24,23 +72,14 @@ const AddGroup = (props) => {
         .required("Required"),
     }),
     onSubmit: (values) => {
-      const { name, address, email } = values;
+      const { id, name, address, email } = values;
       const group = { name, address, email };
-      addGroupservice(group)
-        .then((response) => {
-          console.log(response);
-          const { success, data, message } = response;
-          if (success) {
-            props.loadGroups();
-          } else {
-            // formik.setFieldError("email", message);
-          }
-          props.onClose();
-        })
-        .catch((error) => {
-          console.log("error.......", error);
-          props.onClose();
-        });
+
+      if (selectedGroup) {
+        handleUpdateGroup({ id, ...group });
+      } else {
+        handleAddGroup(group);
+      }
     },
   });
   const { values, errors, touched, handleChange, handleSubmit } = formik;
@@ -74,7 +113,10 @@ const AddGroup = (props) => {
         />
       </div>
       <div className="form-field">
-        <AppButton onClick={handleSubmit}>Create</AppButton>
+        <AppButton onClick={handleSubmit}>
+          {selectedGroup ? "Update" : "Create"}
+        </AppButton>
+        <AppButton onClick={onClose}>Cancel</AppButton>
       </div>
     </form>
   );

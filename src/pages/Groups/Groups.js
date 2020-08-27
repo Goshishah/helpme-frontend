@@ -24,6 +24,7 @@ function formatDate(date) {
 
 const Groups = () => {
   const [groups, setGroups] = useState([]);
+  const [selectedGroup, setSelectedGroup] = useState(null);
   const [open, setOpen] = useState(false);
   const history = useHistory();
 
@@ -34,23 +35,22 @@ const Groups = () => {
         if (success) {
           setGroups(data);
         }
+        setOpen(false);
+        setSelectedGroup(null);
       })
       .catch((error) => {
         console.log("groupsService", error);
+        setOpen(false);
+        setSelectedGroup(null);
       });
   };
 
-  const handleGroupUpdate = () => {
-    getGroupsService()
-      .then((response) => {
-        const { success, data } = response;
-        if (success) {
-          setGroups(data);
-        }
-      })
-      .catch((error) => {
-        console.log("groupsService", error);
-      });
+  const handleGroupUpdate = (group) => {
+    if (!selectedGroup) {
+      setOpen(true);
+      setSelectedGroup(group);
+      return;
+    }
   };
 
   const handleGroupDelete = (id) => {
@@ -84,7 +84,11 @@ const Groups = () => {
       </h1>
       <button onClick={() => setOpen(true)}>Create</button>
       {open ? (
-        <AddGroup onClose={() => setOpen(false)} loadGroups={loadGroups} />
+        <AddGroup
+          onClose={() => setOpen(false)}
+          loadGroups={loadGroups}
+          selectedGroup={selectedGroup}
+        />
       ) : (
         <GroupsTable
           groups={groups}
